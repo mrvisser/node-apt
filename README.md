@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/mrvisser/node-apt.png?branch=master)](https://travis-ci.org/mrvisser/node-apt) [![NPM version](https://badge.fury.io/js/apt.png)](http://badge.fury.io/js/apt)
+
 A node.js wrapper for aptitude package management. Currently only supports 3 methods:
 
 ### Update
