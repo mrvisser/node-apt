@@ -1,0 +1,28 @@
+{
+  "name": "apt",
+  "description": "An apt wrapper for Node.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/mrvisser/node-apt",
+  "author": {
+    "name": "Branden Visser",
+    "email": "mrvisser@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mrvisser/node-apt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrvisser/node-apt/issues"
+  },
+  "dependencies": {
+    "underscore": "latest"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-mocha-test": "latest"
+  }
+}
