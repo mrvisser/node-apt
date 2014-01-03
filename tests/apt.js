@@ -108,7 +108,7 @@ describe('Apt', function() {
             var stderr = '';
             apt.install('redis-server', function(err) {
                 assert.ok(!err);
-                assert.notEqual(stdout.indexOf('Starting redis-server: redis-server.'), -1);
+                assert.notEqual(stdout.indexOf('Starting redis-server: redis-server.'), -1, stdout);
 
                 stdout = '';
                 stderr = '';
