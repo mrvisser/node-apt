@@ -1,5 +1,6 @@
 
 var _ = require('underscore');
+var events = require('events');
 var exec = require('child_process').exec;
 var util = require('util');
 
@@ -29,6 +30,30 @@ var show = module.exports.show = function(name, callback) {
 };
 
 /**
+ * Update the apt cache using apt-get update
+ */
+var update = module.exports.update = function(callback) {
+    var emitter = new events.EventEmitter();
+    var child = exec(util.format('%s update', path('apt-get')), function(err, stdout, stderr) {
+        if (err) {
+            return callback(err);
+        }
+
+        return callback();
+    });
+
+    child.stdout.on('data', function(data) {
+        emitter.emit('stdout', data);
+    });
+
+    child.stderr.on('data', function(data) {
+        emitter.emit('stderr', data);
+    });
+
+    return emitter;
+};
+
+/**
  * Install the module with the given name, optionally with the given version
  *
  * @param   {String}    name                The name of the module to install (e.g., redis-server)
@@ -51,23 +76,43 @@ var install = module.exports.install = function(/* name, [version,] [options,] c
     }
 
     options = options || {};
-
     var forceConf = (options.confnew) ? 'new' : 'old';
-
-    exec(util.format('%s install -y -o Dpkg::Options::="--force-conf%s" %s', path('apt-get'), forceConf, name), function(err, stdout, stderr) {
+    var emitter = new events.EventEmitter();
+    var child = exec(util.format('%s install -y -o Dpkg::Options::="--force-conf%s" %s', path('apt-get'), forceConf, name), function(err, stdout, stderr) {
         if (err) {
             return callback(err);
         }
 
         return show(name, callback);
     });
+
+    child.stdout.on('data', function(data) {
+        emitter.emit('stdout', data);
+    });
+
+    child.stderr.on('data', function(data) {
+        emitter.emit('stderr', data);
+    });
+
+    return emitter;
 };
 
 /**
  * Uninstall the package with the given name
  */
 var uninstall = module.exports.uninstall = function(name, callback) {
-    return exec(util.format('%s remove -y %s', path('apt-get'), name), callback);
+    var emitter = new events.EventEmitter();
+    var child = exec(util.format('%s remove -y %s', path('apt-get'), name), callback);
+
+    child.stdout.on('data', function(data) {
+        emitter.emit('stdout', data);
+    });
+
+    child.stderr.on('data', function(data) {
+        emitter.emit('stderr', data);
+    });
+
+    return emitter;
 };
 
 var _parseOutput = function(output) {
