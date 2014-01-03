@@ -10,7 +10,7 @@ before_install:
   - npm install -g grunt-cli
 
 script:
-  - grunt
+  - sudo grunt
 
 notifications:
   email:
