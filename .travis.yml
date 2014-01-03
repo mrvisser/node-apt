@@ -7,10 +7,12 @@ branches:
     - master
 
 before_install:
-  - sudo npm install -g grunt-cli
+  - npm install -g grunt-cli
 
 script:
-  - sudo grunt
+  - env
+  - ls ~
+  - grunt
 
 notifications:
   email:
