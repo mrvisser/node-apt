@@ -10,9 +10,9 @@ before_install:
   - npm install -g grunt-cli
 
 script:
-  - env
-  - ls ~
-  - grunt
+  - echo $NVM_BIN > /tmp/.nvm_bin
+  - ls -a ~
+  - sudo `cat /tmp/.nvm_bin`/grunt
 
 notifications:
   email:
